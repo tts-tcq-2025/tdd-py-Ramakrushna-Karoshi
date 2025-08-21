@@ -33,3 +33,57 @@ Start Test-driven approach
 1. Write the smallest possible failing test: give input `"" assert output to be 0 ` .
 2. Write the minimum amount of code that'll make it pass.
 3. Refactor any assumptions, continue to pass this test. Do not add any code without a corresponding test.
+
+
+
+
+## Test specifications based on requirements
+
+---
+
+### 1. **Empty String Returns Zero**
+- Input: `""`
+- Output: `0`
+
+### 2. **Single Number Returns That Number**
+- Input: `"1"`
+- Output: `1`
+
+### 3. **Two Numbers, Comma Separated**
+- Input: `"1,2"`
+- Output: `3`
+
+### 4. **Unknown Amount of Numbers**
+- Input: `"1,2,3,4"`
+- Output: `10`
+
+### 5. **New Lines as Delimiters**
+- Input: `"1\n2,3"`
+- Output: `6`
+
+### 6. **Custom Single-Character Delimiter**
+- Input: `"//;\n1;2"`
+- Output: `3`
+
+### 7. **Custom Multi-Character Delimiter**
+- Input: `"//[***]\n1***2***3"`
+- Output: `6`
+
+### 8. **Negative Numbers Throw Exception**
+- Input: `"1,-2,3"`
+- Exception: `"negatives not allowed: -2"`
+
+- Input: `"1,-2,-3"`
+- Exception: `"negatives not allowed: -2, -3"`
+
+### 9. **Numbers Greater Than 1000 Are Ignored**
+- Input: `"2,1001"`
+- Output: `2`
+
+### 10. **Delimiter Format Validation**
+- Input: `"1,\n"`
+- Output: (Should not be supported; no need to test, just clarifying)
+
+---
+
+This list covers all functional requirements and quality constraints for the StringCalculator TDD process.
