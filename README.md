@@ -87,3 +87,63 @@ Start Test-driven approach
 ---
 
 This list covers all functional requirements and quality constraints for the StringCalculator TDD process.
+
+
+##  GHERKIN language
+
+Feature: StringCalculator
+
+  Scenario: Empty string returns zero
+    Given the input ""
+    When I call add
+    Then the result should be 0
+
+  Scenario: Single number returns its value
+    Given the input "1"
+    When I call add
+    Then the result should be 1
+
+  Scenario: Two numbers separated by comma
+    Given the input "1,2"
+    When I call add
+    Then the result should be 3
+
+  Scenario: Unknown amount of numbers
+    Given the input "1,2,3,4"
+    When I call add
+    Then the result should be 10
+
+  Scenario: New lines between numbers
+    Given the input "1\n2,3"
+    When I call add
+    Then the result should be 6
+
+  Scenario: Custom single-character delimiter
+    Given the input "//;\n1;2"
+    When I call add
+    Then the result should be 3
+
+  Scenario: Custom multi-character delimiter
+    Given the input "//[***]\n1***2***3"
+    When I call add
+    Then the result should be 6
+
+  Scenario: Negative numbers throw exception
+    Given the input "1,-2,3"
+    When I call add
+    Then an exception should be thrown with message "negatives not allowed: -2"
+
+  Scenario: Multiple negative numbers throw exception
+    Given the input "1,-2,-3"
+    When I call add
+    Then an exception should be thrown with message "negatives not allowed: -2, -3"
+
+  Scenario: Numbers greater than 1000 are ignored
+    Given the input "2,1001"
+    When I call add
+    Then the result should be 2
+
+# Delimiter format validation scenario is not needed as per requirements
+
+
+
