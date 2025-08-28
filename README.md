@@ -165,4 +165,17 @@ This list covers all functional requirements and quality constraints for the Str
 
 
 
+## Features of String Calculator 
+- Empty string → returns `0`
+- Single number → returns that number
+- Two or more numbers → returns their sum
+- Supports newline `\n` as delimiter
+- Supports custom delimiters:
+  - Single-character: `//;\n1;2`
+  - Multi-character: `//[***]\n1***2***3`
+- Negative numbers → raises `ValueError` with all negatives listed
+- Numbers greater than 1000 are ignored
+
+
+
 
