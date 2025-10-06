@@ -4,30 +4,30 @@ class StringCalculator:
             return 0
 
         delimiter, numbers = self._extract_delimiter(numbers)
-        numbers = numbers.replace("\n", delimiter)
+        parts = self._parse_numbers(numbers, delimiter)
+        self._check_negatives(parts)
+        return self._sum_ignoring_large(parts)
 
-        parts = self._to_int_list(numbers, delimiter)
-        self._raise_if_negatives(parts)
+    def _extract_delimiter(self, text: str) -> tuple[str, str]:
+        """Extract the delimiter (single or multi-character) if defined."""
+        if not text.startswith("//"):
+            return ",", text
 
-        return sum(x for x in parts if x <= 1000)
+        header, text = text.split("\n", 1)
+        if header.startswith("//[") and header.endswith("]"):
+            return header[3:-1], text
+        return header[2:], text
 
-    @staticmethod
-    def _extract_delimiter(numbers: str):
-        """Detect custom or default delimiter."""
-        delimiter = ","
-        if numbers.startswith("//"):
-            header, numbers = numbers.split("\n", 1)
-            delimiter = header[3:-1] if header.startswith("//[") else header[2]
-        return delimiter, numbers
+    def _parse_numbers(self, text: str, delimiter: str) -> list[int]:
+        """Replace newlines, split, and convert to integers."""
+        return [int(x) for x in text.replace("\n", delimiter).split(delimiter) if x]
 
-    @staticmethod
-    def _to_int_list(numbers: str, delimiter: str):
-        """Convert delimited string to integer list."""
-        return [int(x) for x in numbers.split(delimiter) if x]
-
-    @staticmethod
-    def _raise_if_negatives(parts):
+    def _check_negatives(self, numbers: list[int]) -> None:
         """Raise error if negative numbers are found."""
-        negatives = [x for x in parts if x < 0]
+        negatives = [n for n in numbers if n < 0]
         if negatives:
             raise ValueError(f"negatives not allowed: {', '.join(map(str, negatives))}")
+
+    def _sum_ignoring_large(self, numbers: list[int]) -> int:
+        """Sum numbers ignoring those > 1000."""
+        return sum(n for n in numbers if n <= 1000)
